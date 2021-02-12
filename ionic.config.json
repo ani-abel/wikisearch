@@ -1,0 +1,7 @@
+{
+  "name": "search-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

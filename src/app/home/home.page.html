@@ -1,20 +1,60 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <main>
+    <h1 class="offscreen">Search Me A Wikipedia Powered Search Engine</h1>
+    <section class="searchEntry">
+        <h2 class="offscreen">Search Term Entry</h2>
+        <div class="logo" aria-hidden="true">
+            <span class="blue">S</span>
+            <span class="red">e</span>
+            <span class="yellow">a</span>
+            <span class="blue">r</span>
+            <span class="green">c</span>
+            <span class="red">h</span>
+            <span class="blue">W</span>
+            <span class="red">i</span>
+            <span class="yellow">k</span>
+            <span class="blue">i</span>
+            <span class="red exclaim">!</span>
+        </div>
+        <form id="searchBar" class="searchBar" role="search" [formGroup]="searchForm" (ngSubmit)="submitTheSearch()">
+            <label class="offscreen" for="search">Enter a search term or phrase</label>
+            <input id="search" type="text" #searchField autocomplete="off" role="searchbox" [formControlName]="'searchField'" />
+            <div id="clear" class="none button clear" role="button" tabindex="0" (click)="clearForm()" aria-label="Clear search terms">
+                <i class="fas fa-times"></i>
+            </div>
+            <button id="searchButton" class="button searchButton" type="submit" aria-label="Submit button">
+                <i class="fas fa-search blue"></i>
+            </button>
+        </form>
+    </section>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <section class="results">
+        <h2 class="offscreen">Search Results</h2>
+        <div class="statsBar">
+            <div id="stats" class="stats" aria-live="assertive"></div>
+        </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+        <div id="searchResults" class="searchResults" #seachResults>
+          <div class="resultItem" *ngFor="let searchResult of (searchResults$ | async)">
+            <div class="resultTitle">
+              <a (click)="onBrowser(searchResult.id)">
+                {{ searchResult.title }}
+              </a>
+            </div>
+            <div class="resultContents">
+              <div class="resultImage" *ngIf="searchResult.img">
+                <img [src]="searchResult.img" [alt]="searchResult.text" />
+              </div>
+              <div class="resultText">
+                <p class="resultDescription">
+                  {{ searchResult.text }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+  </main>
+
+  <app-footer></app-footer>
 </ion-content>
